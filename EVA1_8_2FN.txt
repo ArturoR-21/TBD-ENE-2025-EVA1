@@ -1,0 +1,96 @@
+EVA1_8_2FN
+
+MySQL Shell 8.0.41
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 19
+Server version: 8.0.41 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use tbd_eva1;
+Default schema set to `tbd_eva1`.
+Fetching global names, object names from `tbd_eva1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > create table students(IDSt, Lastname, grade, idprof) values
+                                         -> (1^C
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE students(
+                                         -> IDSt INT PRIMARY KEY,
+                                         -> Lastname VARCHAR(50) NOT NULL,
+                                         -> Grade INT,
+                                         -> IDProf INT);
+Query OK, 0 rows affected (0.0282 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE students( IDSINT PRIMARY KEY,  Lastname VARCHAR(50) NOT NULL, Grade INT, IDProf INT);                          CREATE TABLE students( IDINT PRIMARY KEY,  Lastname VARCHAR(50) NOT NULL, Grade INT, IDProf INT);                           CREATE TABLE students( IINT PRIMARY KEY,  Lastname VARCHAR(50) NOT NULL, Grade INT, IDProf INT);                            CREATE TABLE students( IINT PRIMARY KEY,  Lastname VARCHAR(50) NOT NULL, Grade INT, IDProf INT);^C
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE Professors( IDProf INT PRIMARY KEY, Prof VARCHAR(50) NOT NULL);
+Query OK, 0 rows affected (0.0209 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > insert into students (IDSt, Lastname, Grade, IDProf) values
+                                         -> (1, 'Mueller', 5, 3);
+Query OK, 1 row affected (0.0092 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > insert into students (IDSt, Lastname, Grade, IDProf) values (2, 'Meier', 4, 2);
+Query OK, 1 row affected (0.0080 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > insert into students (IDSt, Lastname, Grade, IDProf) values (3, 'Tobler', 6, 1);
+
+Query OK, 1 row affected (0.0071 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from students;
++------+----------+-------+--------+
+| IDSt | Lastname | Grade | IDProf |
++------+----------+-------+--------+
+|    1 | Mueller  |     5 |      3 |
+|    2 | Meier    |     4 |      2 |
+|    3 | Tobler   |     6 |      1 |
++------+----------+-------+--------+
+3 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > insert into professors (IDProf, Prof) values (3, 'Schmid');
+Query OK, 1 row affected (0.0080 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > insert into professors (IDProf, Prof) values (2, 'Borner');
+Query OK, 1 row affected (0.0074 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > insert into professors (IDProf, Prof) values (3, 'Bernansconi');
+ERROR: 1062 (23000): Duplicate entry '3' for key 'professors.PRIMARY'
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > insert into professors (IDProf, Prof) values (1, 'Bernansconi');
+Query OK, 1 row affected (0.0085 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from professors;
++--------+-------------+
+| IDProf | Prof        |
++--------+-------------+
+|      1 | Bernansconi |
+|      2 | Borner      |
+|      3 | Schmid      |
++--------+-------------+
+3 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > CREATE TABLE Grades(
+                                         -> IDSt INT,
+                                         -> IDProf INT,
+                                         -> Grade INT,
+                                         -> PRIMARY KEY (IDSt, IDProf),
+                                         -> FOREIGN KEY (IDSt) REFERENCES students(IDSt),
+                                         -> FOREIGN KEY (IDProf) REFERENCES professors (IDProf));
+Query OK, 0 rows affected (0.0499 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from grades;
+Empty set (0.0023 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Grades (IDSt, IDPorf, Grade) VALUES
+                                         -> (1, 3, 5));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 2
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Grades (IDSt, IDPorf, Grade) VALUES (1, 3, 5);
+ERROR: 1054 (42S22): Unknown column 'IDPorf' in 'field list'
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Grades (IDSt, IDProf, Grade) VALUES (1, 3, 5);
+Query OK, 1 row affected (0.0055 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Grades (IDSt, IDProf, Grade) VALUES (2, 2, 4);
+Query OK, 1 row affected (0.0053 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > INSERT INTO Grades (IDSt, IDProf, Grade) VALUES (3, 1, 6);
+Query OK, 1 row affected (0.0058 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL > select * from grades;
++------+--------+-------+
+| IDSt | IDProf | Grade |
++------+--------+-------+
+|    1 |      3 |     5 |
+|    2 |      2 |     4 |
+|    3 |      1 |     6 |
++------+--------+-------+
+3 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd_eva1  SQL >
